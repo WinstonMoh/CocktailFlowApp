@@ -1,6 +1,6 @@
-# cocktail_flow
+# Cocktail Flow
 
-A new Flutter project.
+A Flutter project to design a cocktail_flow app similar to the one on the apple/play store at [Cocktail Flow](https://apps.apple.com/us/app/cocktail-flow-drink-recipes/id486811622)
 
 ## Getting Started
 
