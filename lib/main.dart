@@ -65,9 +65,9 @@ class _MyAppState extends State<MyApp> {
 }
 
 final Map<String, String> _discoverImages = {
-  'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/christmas-cocktails-50f4b96.jpg?quality=90&resize=960,872':
+  'https://images.cocktailflow.com/v1/collection/w_300,h_270/collection_christmas.png':
       'Christmas',
-  'https://static.onecms.io/wp-content/uploads/sites/9/2013/12/06/2009-xl-martini.jpg':
+  'https://images.cocktailflow.com/v1/collection/w_300,h_270/collection_type_martini_trio.png':
       'Martini',
   'https://nygal.com/wp-content/uploads/2020/06/pornstar-martini-cocktail-1-1140x570.jpg':
       'Sparkling',
@@ -80,38 +80,40 @@ final Map<String, String> _latestCocktails = {
       'Olympic',
   'https://www.thespruceeats.com/thmb/CwuMEo5bx7Q6kXOwV3tmHgjgQwg=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/gin-rickey-recipe-760083-hero-01-67f0e60bf4594e1893982c1dad67c548.jpg':
       'Gin Gin Highball',
-  'https://www.saveur.com/resizer/zLMzuR56gVbxkG78D3tamPdAZyY=/760x1140/arc-anglerfish-arc2-prod-bonnier.s3.amazonaws.com/public/NAJERTA42U3MVMST6YN76GYDDY.jpg':
+  'https://mrbcooks.com/wp-content/uploads/2018/10/IMG_9813.jpg':
       'Upside-down Martini',
 };
 
 final Map<String, String> _iconicCocktails = {
   'http://www.allwhitebackground.com/images/5/Cocktail-Background-White-Image.png':
       'Surprise Me!',
-  'https://www.goslingsrum.com/wp-content/uploads/2015/06/darknstormy-full.jpg':
+  'https://www.liquor.com/thmb/e5U_ixZzKIComkO9okCMkXMwUNE=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/dark-and-stormy-720x720-recipe-95f288ed6697444ab3301f8670b4564e.jpg':
       'Dark and Stormy',
-  'https://makemeacocktail.com/images/cocktails/8433/2014743684d558cf0b0d311a10b707300e51.jpg':
+  'https://images.cocktailflow.com/v1/cocktail/w_300,h_540/cocktail_daiquiri-1.png':
       'Daiquiri',
-  'https://www.cocktail-db.com/stat/img/1280/PinaColada.jpg': 'Pina Colada'
+  'https://images.cocktailflow.com/v1/cocktail/w_300,h_540/cocktail_pina_colada-1.png':
+      'Pina Colada'
 };
 
 final Map<String, String> _aroundTheWorld = {
-  'https://thumbs.dreamstime.com/b/cocktail-served-lemon-slice-flag-france-french-104139735.jpg':
+  'https://images.cocktailflow.com/v1/collection/w_300,h_270/collection_france.png':
       'France',
-  'https://thumbs.dreamstime.com/b/cocktail-served-lemon-slice-flag-italy-italian-104140026.jpg':
+  'https://images.cocktailflow.com/v1/collection/w_300,h_270/collection_italy.png':
       'Italy',
-  'https://thumbs.dreamstime.com/b/american-cocktail-served-lemon-slice-flag-united-states-america-103949980.jpg':
+  'https://images.cocktailflow.com/v1/collection/w_300,h_270/collection_usa.png':
       'USA',
-  'https://thumbs.dreamstime.com/b/english-cocktail-cocktail-served-lemon-slice-flag-united-kingdom-104367574.jpg':
+  'https://images.cocktailflow.com/v1/collection/w_300,h_270/collection_england.png':
       'United Kingdom'
 };
 
 final Map<String, String> _cocktailType = {
-  'https://www.saveur.com/resizer/3frWHxg9pbYmXJ7bmveRIDSrenA=/869x652/arc-anglerfish-arc2-prod-bonnier.s3.amazonaws.com/public/EVQX6TRB4MWFFKUMQKFVCCQICI.jpg':
+  'https://images.cocktailflow.com/v1/collection/w_300,h_270/collection_type_classical_trio.png':
       'Classic',
-  'https://cdn.trendhunterstatic.com/thumbs/camel-milk.jpeg': 'Creamy',
-  'https://previews.123rf.com/images/dml5050/dml50501203/dml5050120300091/12932289-alcohol-margarita-cocktails-or-long-island-iced-tea-with-lime-in-short-cocktail-glasses-isolated-on-.jpg':
+  'https://images.cocktailflow.com/v1/collection/w_300,h_270/collection_type_creamy.png':
+      'Creamy',
+  'https://images.cocktailflow.com/v1/collection/w_300,h_270/collection_type_short.png':
       'Short',
-  'https://lh3.googleusercontent.com/proxy/Vtyb9UK3NPKBZpbtO1ipffOz66UYVZyf1oB5e7PF3jSP-gJw6FumR9LA_GgzNnGepc25qqB2XMve0VtkMi_PUf6FCICKVRpIHBzMLE0C_lzdLVIYTxMCB8QwYc4G':
+  'https://images.cocktailflow.com/v1/cocktail/w_300,h_540/cocktail_hangmans_blood-1.png':
       'Longdrink'
 };
 
@@ -131,7 +133,7 @@ List<Widget> _discoverSection = <Widget>[
       options: CarouselOptions(),
       items: _discoverImages.entries
           .map((item) => Column(children: <Widget>[
-                Center(
+                Expanded(
                     child: Image.network(
                   item.key,
                   fit: BoxFit.fill,
