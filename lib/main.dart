@@ -1,3 +1,4 @@
+import 'package:cocktail_flow/pages/ingredientspage.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,12 +13,12 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int _index = 0; // what widget currently displayed.
+  int _index = 2; // what widget is currently displayed.
 
   List<List<Widget>> _widgets = [
     _discoverSection,
     <Widget>[cocktailsSection],
-    <Widget>[ingredientsSection],
+    _ingredientsSection,
     <Widget>[assistantSection],
     <Widget>[moreSection],
   ];
@@ -85,7 +86,7 @@ final Map<String, String> _latestCocktails = {
 };
 
 final Map<String, String> _iconicCocktails = {
-  'http://www.allwhitebackground.com/images/5/Cocktail-Background-White-Image.png':
+  'https://images.cocktailflow.com/v1/collection/w_300,h_270/collection_fancy.png':
       'Surprise Me!',
   'https://www.liquor.com/thmb/e5U_ixZzKIComkO9okCMkXMwUNE=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/dark-and-stormy-720x720-recipe-95f288ed6697444ab3301f8670b4564e.jpg':
       'Dark and Stormy',
@@ -167,18 +168,20 @@ List<Widget> _discoverSection = <Widget>[
       physics: ScrollPhysics(),
       children: _iconicCocktails.entries
           .map((item) => Column(children: <Widget>[
+                Expanded(
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Image.network(
+                          item.key,
+                          fit: BoxFit.fill,
+                          width: 180,
+                          height: 180,
+                        ))),
                 Text(item.value,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 15,
                     )),
-                Flexible(
-                    child: Image.network(
-                  item.key,
-                  fit: BoxFit.fill,
-                  width: 180,
-                  height: 180,
-                )),
               ]))
           .toList(),
     ),
@@ -203,12 +206,14 @@ List<Widget> _discoverSection = <Widget>[
       children: _cocktailType.entries
           .map((item) => Column(children: <Widget>[
                 Flexible(
-                    child: Image.network(
-                  item.key,
-                  fit: BoxFit.fill,
-                  width: 180,
-                  height: 180,
-                )),
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Image.network(
+                          item.key,
+                          fit: BoxFit.fill,
+                          width: 180,
+                          height: 180,
+                        ))),
                 Text(item.value,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -243,12 +248,14 @@ List<Widget> _discoverSection = <Widget>[
                       fontSize: 15,
                     )),
                 Flexible(
-                    child: Image.network(
-                  item.key,
-                  fit: BoxFit.cover,
-                  width: 180,
-                  height: 180,
-                )),
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Image.network(
+                          item.key,
+                          fit: BoxFit.fill,
+                          width: 180,
+                          height: 180,
+                        ))),
               ]))
           .toList(),
     ),
@@ -273,12 +280,14 @@ List<Widget> _discoverSection = <Widget>[
       children: _aroundTheWorld.entries
           .map((item) => Column(children: <Widget>[
                 Flexible(
-                    child: Image.network(
-                  item.key,
-                  fit: BoxFit.cover,
-                  width: 180,
-                  height: 180,
-                )),
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Image.network(
+                          item.key,
+                          fit: BoxFit.fill,
+                          width: 180,
+                          height: 180,
+                        ))),
                 Text(item.value,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -291,41 +300,48 @@ List<Widget> _discoverSection = <Widget>[
 ];
 
 Widget cocktailsSection = Container(
+  padding: EdgeInsets.all(20),
   child: Text(
     'Cocktails',
     style: TextStyle(
       fontWeight: FontWeight.bold,
-      fontSize: 30,
+      fontSize: 40,
     ),
   ),
 );
 
-Widget ingredientsSection = Container(
-  child: Text(
-    'Ingredients',
-    style: TextStyle(
-      fontWeight: FontWeight.bold,
-      fontSize: 30,
+List<Widget> _ingredientsSection = <Widget>[
+  Container(
+    padding: EdgeInsets.all(20),
+    child: Text(
+      'Ingredients',
+      style: TextStyle(
+        fontWeight: FontWeight.bold,
+        fontSize: 40,
+      ),
     ),
   ),
-);
+  IngredientsPage()
+];
 
 Widget assistantSection = Container(
+  padding: EdgeInsets.all(20),
   child: Text(
     'Assistant',
     style: TextStyle(
       fontWeight: FontWeight.bold,
-      fontSize: 30,
+      fontSize: 40,
     ),
   ),
 );
 
 Widget moreSection = Container(
+  padding: EdgeInsets.all(20),
   child: Text(
     'More',
     style: TextStyle(
       fontWeight: FontWeight.bold,
-      fontSize: 30,
+      fontSize: 40,
     ),
   ),
 );
