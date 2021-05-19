@@ -1,6 +1,7 @@
 import 'package:cocktail_flow/pages/assistantpage.dart';
 import 'package:cocktail_flow/pages/discoverpage.dart';
 import 'package:cocktail_flow/pages/ingredientspage.dart';
+import 'package:cocktail_flow/pages/morepage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -21,7 +22,7 @@ class _MyAppState extends State<MyApp> {
     <Widget>[cocktailsSection],
     <Widget>[IngredientsPage()],
     <Widget>[AssistantPage()],
-    <Widget>[moreSection],
+    <Widget>[MorePage()],
   ];
 
   _tapped(int tappedIndex) {
@@ -70,17 +71,6 @@ Widget cocktailsSection = Container(
   padding: EdgeInsets.all(20),
   child: Text(
     'Cocktails',
-    style: TextStyle(
-      fontWeight: FontWeight.bold,
-      fontSize: 40,
-    ),
-  ),
-);
-
-Widget moreSection = Container(
-  padding: EdgeInsets.all(20),
-  child: Text(
-    'More',
     style: TextStyle(
       fontWeight: FontWeight.bold,
       fontSize: 40,
