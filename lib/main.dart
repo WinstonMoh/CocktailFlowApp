@@ -1,4 +1,5 @@
 import 'package:cocktail_flow/pages/assistantpage.dart';
+import 'package:cocktail_flow/pages/cocktailspage.dart';
 import 'package:cocktail_flow/pages/discoverpage.dart';
 import 'package:cocktail_flow/pages/ingredientspage.dart';
 import 'package:cocktail_flow/pages/morepage.dart';
@@ -15,11 +16,11 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int _index = 3; // what widget is currently displayed.
+  int _index = 1; // what widget is currently displayed.
 
   List<List<Widget>> _widgets = [
     <Widget>[DiscoverPage()],
-    <Widget>[cocktailsSection],
+    <Widget>[CocktailsPage()],
     <Widget>[IngredientsPage()],
     <Widget>[AssistantPage()],
     <Widget>[MorePage()],
@@ -66,14 +67,3 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-
-Widget cocktailsSection = Container(
-  padding: EdgeInsets.all(20),
-  child: Text(
-    'Cocktails',
-    style: TextStyle(
-      fontWeight: FontWeight.bold,
-      fontSize: 40,
-    ),
-  ),
-);
