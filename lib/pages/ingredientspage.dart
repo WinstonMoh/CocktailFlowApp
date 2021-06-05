@@ -3,27 +3,30 @@ import 'package:cocktail_flow/util/ingredientslist.dart';
 import 'package:flutter/material.dart';
 
 class IngredientsPage extends StatefulWidget {
-  const IngredientsPage({Key key}) : super(key: key);
   @override
   _IngredientsPageState createState() => new _IngredientsPageState();
 }
 
-class _IngredientsPageState extends State<IngredientsPage> {
+class _IngredientsPageState extends State<IngredientsPage>
+    with AutomaticKeepAliveClientMixin<IngredientsPage> {
   TextEditingController _editingController = TextEditingController();
   ScrollController _scrollingController = new ScrollController();
 
-  final List<Ingredient> ingredientsList =
+  final List<Ingredient> _ingredientsList =
       IngredientsList.getMockedIngredients();
-  var items = [];
+  var _items = [];
 
   @override
   void initState() {
-    items.addAll(ingredientsList);
+    _items.addAll(_ingredientsList);
     super.initState();
   }
 
+  @override
+  bool get wantKeepAlive => true;
+
   void filterSearchResults(String query) {
-    List<Ingredient> originalList = ingredientsList; // store previous list.
+    List<Ingredient> originalList = _ingredientsList; // store previous list.
     if (query.isNotEmpty) {
       List<Ingredient> filteredList = [];
       originalList.forEach((item) {
@@ -33,20 +36,21 @@ class _IngredientsPageState extends State<IngredientsPage> {
       });
       setState(() {
         //update internal state of object.
-        items.clear();
-        items.addAll(filteredList);
+        _items.clear();
+        _items.addAll(filteredList);
       });
     } else {
       setState(() {
         // update internal state of object.
-        items.clear();
-        items.addAll(ingredientsList);
+        _items.clear();
+        _items.addAll(_ingredientsList);
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return new ListView(children: <Widget>[
       Container(
         child: Column(
@@ -77,8 +81,8 @@ class _IngredientsPageState extends State<IngredientsPage> {
                             _editingController.clear();
                             setState(() {
                               //reset internal state of object.
-                              items.clear();
-                              items.addAll(ingredientsList);
+                              _items.clear();
+                              _items.addAll(_ingredientsList);
                             });
                           },
                           icon: Icon(Icons.clear),
@@ -91,13 +95,13 @@ class _IngredientsPageState extends State<IngredientsPage> {
                   physics: ClampingScrollPhysics(),
                   controller: _scrollingController,
                   shrinkWrap: true,
-                  itemCount: items.length,
+                  itemCount: _items.length,
                   itemBuilder: (context, index) {
                     return ListTile(
-                      tileColor: items[index].color,
-                      title: Text('${items[index].name}'),
+                      tileColor: _items[index].color,
+                      title: Text('${_items[index].name}'),
                       leading: FlutterLogo(size: 56.0),
-                      subtitle: Text('${items[index].description}'),
+                      subtitle: Text('${_items[index].description}'),
                       trailing: Icon(Icons.more_vert),
                       onTap: () {},
                     );

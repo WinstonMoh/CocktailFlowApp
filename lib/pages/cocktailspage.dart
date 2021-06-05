@@ -3,26 +3,29 @@ import 'package:cocktail_flow/util/cocktailslist.dart';
 import 'package:flutter/material.dart';
 
 class CocktailsPage extends StatefulWidget {
-  const CocktailsPage({Key key}) : super(key: key);
   @override
   _CocktailsPageState createState() => new _CocktailsPageState();
 }
 
-class _CocktailsPageState extends State<CocktailsPage> {
+class _CocktailsPageState extends State<CocktailsPage>
+    with AutomaticKeepAliveClientMixin<CocktailsPage> {
   TextEditingController _editingController = TextEditingController();
   ScrollController _scrollingController = new ScrollController();
 
-  final List<Cocktail> cocktailsList = CocktailsList.getMockedCocktails();
-  var items = [];
+  final List<Cocktail> _cocktailsList = CocktailsList.getMockedCocktails();
+  var _items = [];
 
   @override
   void initState() {
-    items.addAll(cocktailsList);
+    _items.addAll(_cocktailsList);
     super.initState();
   }
 
+  @override
+  bool get wantKeepAlive => true;
+
   void filterSearchResults(String query) {
-    List<Cocktail> originalList = cocktailsList; // store previous list.
+    List<Cocktail> originalList = _cocktailsList; // store previous list.
     if (query.isNotEmpty) {
       List<Cocktail> filteredList = [];
       originalList.forEach((item) {
@@ -32,20 +35,21 @@ class _CocktailsPageState extends State<CocktailsPage> {
       });
       setState(() {
         //update internal state of object.
-        items.clear();
-        items.addAll(filteredList);
+        _items.clear();
+        _items.addAll(filteredList);
       });
     } else {
       setState(() {
         // update internal state of object.
-        items.clear();
-        items.addAll(cocktailsList);
+        _items.clear();
+        _items.addAll(_cocktailsList);
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return new ListView(children: <Widget>[
       Container(
         child: Column(
@@ -76,8 +80,8 @@ class _CocktailsPageState extends State<CocktailsPage> {
                             _editingController.clear();
                             setState(() {
                               //reset internal state of object.
-                              items.clear();
-                              items.addAll(cocktailsList);
+                              _items.clear();
+                              _items.addAll(_cocktailsList);
                             });
                           },
                           icon: Icon(Icons.clear),
@@ -90,13 +94,13 @@ class _CocktailsPageState extends State<CocktailsPage> {
                   physics: ClampingScrollPhysics(),
                   controller: _scrollingController,
                   shrinkWrap: true,
-                  itemCount: items.length,
+                  itemCount: _items.length,
                   itemBuilder: (context, index) {
                     return ListTile(
-                      tileColor: items[index].color,
-                      title: Text('${items[index].name}'),
+                      tileColor: _items[index].color,
+                      title: Text('${_items[index].name}'),
                       leading: FlutterLogo(size: 56.0),
-                      subtitle: Text('${items[index].strength}'),
+                      subtitle: Text('${_items[index].strength}'),
                       trailing: Icon(Icons.more_vert),
                       onTap: () {},
                     );

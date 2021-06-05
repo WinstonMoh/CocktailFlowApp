@@ -16,30 +16,37 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int _index = 1; // what widget is currently displayed.
-
-  final List<Widget> _pages = [
-    DiscoverPage(key: PageStorageKey("Discover")),
-    CocktailsPage(key: PageStorageKey("Cocktails")),
-    IngredientsPage(key: PageStorageKey("Ingredients")),
-    AssistantPage(key: PageStorageKey("Assistant")),
-    MorePage(key: PageStorageKey("More")),
-  ];
-
-  final PageStorageBucket bucket = PageStorageBucket();
-
-  // List<List<Widget>> _widgets = [
-  //   <Widget>[DiscoverPage()],
-  //   <Widget>[CocktailsPage()],
-  //   <Widget>[IngredientsPage()],
-  //   <Widget>[AssistantPage()],
-  //   <Widget>[MorePage()],
-  // ];
+  int _index; // what widget is currently displayed.
+  List<Widget> _pages;
+  PageController _pageController;
 
   _tapped(int tappedIndex) {
     setState(() {
       _index = tappedIndex;
+      _pageController.jumpToPage(tappedIndex);
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _index = 1;
+    _pageController = PageController(initialPage: _index);
+    _pages = [
+      DiscoverPage(),
+      CocktailsPage(),
+      IngredientsPage(),
+      AssistantPage(),
+      MorePage(),
+    ];
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+
+    super.dispose();
   }
 
   @override
@@ -52,12 +59,12 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
       home: Scaffold(
-        body: Container(
-          child: PageStorage(
-            // support app body scrolling on small device.
-            child: _pages[_index],
-            bucket: bucket,
-          ),
+        body: PageView(
+          // support app body scrolling on small device.
+          children: _pages,
+          //bucket: _bucket,
+          controller: _pageController,
+          physics: NeverScrollableScrollPhysics(),
         ),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _index,

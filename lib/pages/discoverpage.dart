@@ -2,12 +2,12 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 class DiscoverPage extends StatefulWidget {
-  const DiscoverPage({Key key}) : super(key: key);
   @override
   _DiscoverPageState createState() => new _DiscoverPageState();
 }
 
-class _DiscoverPageState extends State<DiscoverPage> {
+class _DiscoverPageState extends State<DiscoverPage>
+    with AutomaticKeepAliveClientMixin<DiscoverPage> {
   final Map<String, String> _discoverImages = {
     'https://images.cocktailflow.com/v1/collection/w_300,h_270/collection_christmas.png':
         'Christmas',
@@ -64,9 +64,13 @@ class _DiscoverPageState extends State<DiscoverPage> {
   };
 
   @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
+    super.build(context);
+    return new ListView(children: <Widget>[
+      Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
@@ -249,6 +253,6 @@ class _DiscoverPageState extends State<DiscoverPage> {
           ),
         ],
       ),
-    );
+    ]);
   }
 }

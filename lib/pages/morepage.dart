@@ -3,14 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MorePage extends StatefulWidget {
-  const MorePage({Key key}) : super(key: key);
   @override
   _MorePageState createState() => new _MorePageState();
 }
 
-class _MorePageState extends State<MorePage> {
+class _MorePageState extends State<MorePage>
+    with AutomaticKeepAliveClientMixin<MorePage> {
+  @override
+  bool get wantKeepAlive => true;
+
   @override
   Widget build(BuildContext context) {
+    super.build(context); // notice super call here.
     return new ListView(children: <Widget>[
       Container(
           child:

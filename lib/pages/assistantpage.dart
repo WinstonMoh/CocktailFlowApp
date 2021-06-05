@@ -24,12 +24,12 @@ const AUTH0_REDIRECT_URI = 'com.auth0.flutterdemo://login-callback';
 const AUTH0_ISSUER = 'https://$AUTH0_DOMAIN';
 
 class AssistantPage extends StatefulWidget {
-  const AssistantPage({Key key}) : super(key: key);
   @override
   _AssistantPageState createState() => new _AssistantPageState();
 }
 
-class _AssistantPageState extends State<AssistantPage> {
+class _AssistantPageState extends State<AssistantPage>
+    with AutomaticKeepAliveClientMixin<AssistantPage> {
   bool isBusy = false;
   bool isLoggedIn = false;
   String errorMessage;
@@ -38,7 +38,11 @@ class _AssistantPageState extends State<AssistantPage> {
   String picture;
 
   @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context); // notice super call here.
     return new ListView(children: <Widget>[
       Container(
         child: Column(
@@ -264,8 +268,7 @@ class _AssistantPageState extends State<AssistantPage> {
         email = idToken['email'];
         picture = profile['picture'];
       });
-      print("login: ");
-      print(isLoggedIn);
+      print("logged in as : " + name);
     } catch (e, s) {
       print('login error: $e - stack: $s');
 
@@ -293,14 +296,11 @@ class _AssistantPageState extends State<AssistantPage> {
   }
 
   void initAction() async {
-    final storedRefreshToken = await secureStorage.read(
+    String storedRefreshToken = await secureStorage.read(
         key: 'refresh_token'); // get stored refreshToken
     if (storedRefreshToken == null) {
-      print("token is null");
       return;
     }
-    print(isLoggedIn);
-    print("token is NOT null");
 
     setState(() {
       isBusy = true;
@@ -314,7 +314,8 @@ class _AssistantPageState extends State<AssistantPage> {
         refreshToken: storedRefreshToken,
       ));
 
-      // response.accessTokenExpirationDateTime: check for accessTokenExpirationDateTime in response to use or not.
+      // print(response
+      //     .accessTokenExpirationDateTime); //check for accessTokenExpirationDateTime in response to use or not.
 
       final idToken = parseIdToken(response.idToken);
       final profile = await getUserDetails(response.accessToken);
