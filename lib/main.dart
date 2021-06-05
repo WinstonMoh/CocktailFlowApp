@@ -1,4 +1,5 @@
 import 'package:cocktail_flow/pages/assistantpage.dart';
+import 'package:cocktail_flow/pages/cocktailspage.dart';
 import 'package:cocktail_flow/pages/discoverpage.dart';
 import 'package:cocktail_flow/pages/ingredientspage.dart';
 import 'package:cocktail_flow/pages/morepage.dart';
@@ -15,20 +16,37 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int _index = 3; // what widget is currently displayed.
-
-  List<List<Widget>> _widgets = [
-    <Widget>[DiscoverPage()],
-    <Widget>[cocktailsSection],
-    <Widget>[IngredientsPage()],
-    <Widget>[AssistantPage()],
-    <Widget>[MorePage()],
-  ];
+  int _index; // what widget is currently displayed.
+  List<Widget> _pages;
+  PageController _pageController;
 
   _tapped(int tappedIndex) {
     setState(() {
       _index = tappedIndex;
+      _pageController.jumpToPage(tappedIndex);
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _index = 1;
+    _pageController = PageController(initialPage: _index);
+    _pages = [
+      DiscoverPage(),
+      CocktailsPage(),
+      IngredientsPage(),
+      AssistantPage(),
+      MorePage(),
+    ];
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+
+    super.dispose();
   }
 
   @override
@@ -41,9 +59,12 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
       home: Scaffold(
-        body: ListView(
+        body: PageView(
           // support app body scrolling on small device.
-          children: _widgets[_index].toList(),
+          children: _pages,
+          //bucket: _bucket,
+          controller: _pageController,
+          physics: NeverScrollableScrollPhysics(),
         ),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _index,
@@ -66,14 +87,3 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-
-Widget cocktailsSection = Container(
-  padding: EdgeInsets.all(20),
-  child: Text(
-    'Cocktails',
-    style: TextStyle(
-      fontWeight: FontWeight.bold,
-      fontSize: 40,
-    ),
-  ),
-);

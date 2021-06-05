@@ -1,24 +1,23 @@
-import 'package:cocktail_flow/models/ingredient.dart';
-import 'package:cocktail_flow/util/ingredientslist.dart';
+import 'package:cocktail_flow/models/cocktail.dart';
+import 'package:cocktail_flow/util/cocktailslist.dart';
 import 'package:flutter/material.dart';
 
-class IngredientsPage extends StatefulWidget {
+class CocktailsPage extends StatefulWidget {
   @override
-  _IngredientsPageState createState() => new _IngredientsPageState();
+  _CocktailsPageState createState() => new _CocktailsPageState();
 }
 
-class _IngredientsPageState extends State<IngredientsPage>
-    with AutomaticKeepAliveClientMixin<IngredientsPage> {
+class _CocktailsPageState extends State<CocktailsPage>
+    with AutomaticKeepAliveClientMixin<CocktailsPage> {
   TextEditingController _editingController = TextEditingController();
   ScrollController _scrollingController = new ScrollController();
 
-  final List<Ingredient> _ingredientsList =
-      IngredientsList.getMockedIngredients();
+  final List<Cocktail> _cocktailsList = CocktailsList.getMockedCocktails();
   var _items = [];
 
   @override
   void initState() {
-    _items.addAll(_ingredientsList);
+    _items.addAll(_cocktailsList);
     super.initState();
   }
 
@@ -26,9 +25,9 @@ class _IngredientsPageState extends State<IngredientsPage>
   bool get wantKeepAlive => true;
 
   void filterSearchResults(String query) {
-    List<Ingredient> originalList = _ingredientsList; // store previous list.
+    List<Cocktail> originalList = _cocktailsList; // store previous list.
     if (query.isNotEmpty) {
-      List<Ingredient> filteredList = [];
+      List<Cocktail> filteredList = [];
       originalList.forEach((item) {
         if (item.name.toLowerCase().contains(query.toLowerCase())) {
           filteredList.add(item);
@@ -43,7 +42,7 @@ class _IngredientsPageState extends State<IngredientsPage>
       setState(() {
         // update internal state of object.
         _items.clear();
-        _items.addAll(_ingredientsList);
+        _items.addAll(_cocktailsList);
       });
     }
   }
@@ -59,7 +58,7 @@ class _IngredientsPageState extends State<IngredientsPage>
               Container(
                 padding: EdgeInsets.all(15.0),
                 child: Text(
-                  'Ingredients',
+                  'Cocktails',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 40,
@@ -82,7 +81,7 @@ class _IngredientsPageState extends State<IngredientsPage>
                             setState(() {
                               //reset internal state of object.
                               _items.clear();
-                              _items.addAll(_ingredientsList);
+                              _items.addAll(_cocktailsList);
                             });
                           },
                           icon: Icon(Icons.clear),
@@ -101,7 +100,7 @@ class _IngredientsPageState extends State<IngredientsPage>
                       tileColor: _items[index].color,
                       title: Text('${_items[index].name}'),
                       leading: FlutterLogo(size: 56.0),
-                      subtitle: Text('${_items[index].description}'),
+                      subtitle: Text('${_items[index].strength}'),
                       trailing: Icon(Icons.more_vert),
                       onTap: () {},
                     );

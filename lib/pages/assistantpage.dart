@@ -28,7 +28,8 @@ class AssistantPage extends StatefulWidget {
   _AssistantPageState createState() => new _AssistantPageState();
 }
 
-class _AssistantPageState extends State<AssistantPage> {
+class _AssistantPageState extends State<AssistantPage>
+    with AutomaticKeepAliveClientMixin<AssistantPage> {
   bool isBusy = false;
   bool isLoggedIn = false;
   String errorMessage;
@@ -37,180 +38,186 @@ class _AssistantPageState extends State<AssistantPage> {
   String picture;
 
   @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            padding: EdgeInsets.all(20),
-            child: Text(
-              'Assistant',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 40,
+    super.build(context); // notice super call here.
+    return new ListView(children: <Widget>[
+      Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.all(20),
+              child: Text(
+                'Assistant',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 40,
+                ),
               ),
             ),
-          ),
-          Card(
-              child: new Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              new ListTile(
-                title: isLoggedIn
-                    ? Text(
-                        'Logged in as \n$email',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      )
-                    : Text(
-                        'Log into account',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                onTap: () {
-                  isBusy
-                      ? CircularProgressIndicator()
-                      : isLoggedIn
-                          ? Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      (Profile(logoutAction, email, picture))))
-                          : loginAction(); //Login(loginAction, errorMessage);
-                },
-                tileColor: Colors.grey[200],
-                trailing: const Icon(Icons.chevron_right_rounded),
-              ),
-            ],
-          )),
-          Card(
-              child: new Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              new ListTile(
-                leading: const Icon(
-                  Icons.liquor,
-                  size: 50.0,
-                  color: Colors.indigo,
+            Card(
+                child: new Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                new ListTile(
+                  title: isLoggedIn
+                      ? Text(
+                          'Logged in as \n$email',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        )
+                      : Text(
+                          'Log into account',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                  onTap: () {
+                    isBusy
+                        ? CircularProgressIndicator()
+                        : isLoggedIn
+                            ? Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => (Profile(
+                                        logoutAction, email, picture))))
+                            : loginAction(); //Login(loginAction, errorMessage);
+                  },
+                  tileColor: Colors.grey[200],
+                  trailing: const Icon(Icons.chevron_right_rounded),
                 ),
-                title: const Text(
-                  'My Bar',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+              ],
+            )),
+            Card(
+                child: new Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                new ListTile(
+                  leading: const Icon(
+                    Icons.liquor,
+                    size: 50.0,
+                    color: Colors.indigo,
+                  ),
+                  title: const Text(
+                    'My Bar',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  subtitle: const Text(
+                      'Select Ingredients at hand to see what cocktails you can make'),
+                  onTap: () {},
+                  isThreeLine: true,
                 ),
-                subtitle: const Text(
-                    'Select Ingredients at hand to see what cocktails you can make'),
-                onTap: () {},
-                isThreeLine: true,
-              ),
-            ],
-          )),
-          Card(
-              child: new Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              new ListTile(
-                leading: const Icon(
-                  Icons.star,
-                  size: 50.0,
-                  color: Colors.amber,
+              ],
+            )),
+            Card(
+                child: new Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                new ListTile(
+                  leading: const Icon(
+                    Icons.star,
+                    size: 50.0,
+                    color: Colors.amber,
+                  ),
+                  title: const Text(
+                    'Favourite Cocktails',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  subtitle: const Text(
+                      'Make cocktails as favourite to have easy access to them'),
+                  onTap: () {},
+                  isThreeLine: true,
                 ),
-                title: const Text(
-                  'Favourite Cocktails',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+              ],
+            )),
+            Card(
+                child: new Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                new ListTile(
+                  leading: const Icon(
+                    Icons.menu_book,
+                    color: Colors.orange,
+                    size: 50.0,
+                  ),
+                  title: const Text(
+                    'My Notes',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  subtitle: const Text(
+                      'Add custom preparation notes or tweaks to cocktails'),
+                  onTap: () {},
+                  isThreeLine: true,
                 ),
-                subtitle: const Text(
-                    'Make cocktails as favourite to have easy access to them'),
-                onTap: () {},
-                isThreeLine: true,
-              ),
-            ],
-          )),
-          Card(
-              child: new Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              new ListTile(
-                leading: const Icon(
-                  Icons.menu_book,
-                  color: Colors.orange,
-                  size: 50.0,
+              ],
+            )),
+            Card(
+                child: new Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                new ListTile(
+                  leading: const Icon(
+                    Icons.book,
+                    size: 50.0,
+                    color: Colors.lightBlue,
+                  ),
+                  title: const Text(
+                    'My Cocktails',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  subtitle: const Text(
+                      'Want to capture a recipe we don\'t have? Just add them and we\'ll save and store it for you'),
+                  onTap: () {},
+                  isThreeLine: true,
                 ),
-                title: const Text(
-                  'My Notes',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+              ],
+            )),
+            Card(
+                child: new Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                new ListTile(
+                  leading: const Icon(
+                    Icons.emoji_objects_outlined,
+                    size: 50.0,
+                    color: Colors.green,
+                  ),
+                  title: const Text(
+                    'Tips',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  subtitle: const Text(
+                      'Deep dive into some of the more advanced topics around mixology'),
+                  onTap: () {},
+                  isThreeLine: true,
                 ),
-                subtitle: const Text(
-                    'Add custom preparation notes or tweaks to cocktails'),
-                onTap: () {},
-                isThreeLine: true,
-              ),
-            ],
-          )),
-          Card(
-              child: new Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              new ListTile(
-                leading: const Icon(
-                  Icons.book,
-                  size: 50.0,
-                  color: Colors.lightBlue,
+              ],
+            )),
+            Card(
+                child: new Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                new ListTile(
+                  leading: const Icon(
+                    Icons.library_books_rounded,
+                    color: Colors.deepPurpleAccent,
+                    size: 50.0,
+                  ),
+                  title: const Text(
+                    'Cocktail Books',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  subtitle: const Text(
+                      'Our most beloved cocktail books and the sources of the recipes in the app'),
+                  onTap: () {},
+                  isThreeLine: true,
                 ),
-                title: const Text(
-                  'My Cocktails',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                subtitle: const Text(
-                    'Want to capture a recipe we don\'t have? Just add them and we\'ll save and store it for you'),
-                onTap: () {},
-                isThreeLine: true,
-              ),
-            ],
-          )),
-          Card(
-              child: new Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              new ListTile(
-                leading: const Icon(
-                  Icons.emoji_objects_outlined,
-                  size: 50.0,
-                  color: Colors.green,
-                ),
-                title: const Text(
-                  'Tips',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                subtitle: const Text(
-                    'Deep dive into some of the more advanced topics around mixology'),
-                onTap: () {},
-                isThreeLine: true,
-              ),
-            ],
-          )),
-          Card(
-              child: new Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              new ListTile(
-                leading: const Icon(
-                  Icons.library_books_rounded,
-                  color: Colors.deepPurpleAccent,
-                  size: 50.0,
-                ),
-                title: const Text(
-                  'Cocktail Books',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                subtitle: const Text(
-                    'Our most beloved cocktail books and the sources of the recipes in the app'),
-                onTap: () {},
-                isThreeLine: true,
-              ),
-            ],
-          ))
-        ],
-      ),
-    );
+              ],
+            ))
+          ],
+        ),
+      )
+    ]);
   }
 
   Map<String, dynamic> parseIdToken(String idToken) {
@@ -261,6 +268,7 @@ class _AssistantPageState extends State<AssistantPage> {
         email = idToken['email'];
         picture = profile['picture'];
       });
+      print("logged in as : " + name);
     } catch (e, s) {
       print('login error: $e - stack: $s');
 
@@ -288,9 +296,11 @@ class _AssistantPageState extends State<AssistantPage> {
   }
 
   void initAction() async {
-    final storedRefreshToken = await secureStorage.read(
+    String storedRefreshToken = await secureStorage.read(
         key: 'refresh_token'); // get stored refreshToken
-    if (storedRefreshToken == null) return;
+    if (storedRefreshToken == null) {
+      return;
+    }
 
     setState(() {
       isBusy = true;
@@ -304,7 +314,8 @@ class _AssistantPageState extends State<AssistantPage> {
         refreshToken: storedRefreshToken,
       ));
 
-      // response.accessTokenExpirationDateTime: check for accessTokenExpirationDateTime in response to use or not.
+      // print(response
+      //     .accessTokenExpirationDateTime); //check for accessTokenExpirationDateTime in response to use or not.
 
       final idToken = parseIdToken(response.idToken);
       final profile = await getUserDetails(response.accessToken);
